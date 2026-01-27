@@ -1,0 +1,22 @@
+[
+  {
+    "id": "video1",
+    "title": "Welcome Video",
+    "type": "video",
+    "url": "https://www.youtube.com/embed/dQw4w9WgXcQ"
+  },
+  {
+    "id": "link1",
+    "title": "Library Resources",
+    "type": "link",
+    "description": "Reading materials and library info.",
+    "url": "https://example.com"
+  },
+  {
+    "id": "link2",
+    "title": "Math Practice",
+    "type": "link",
+    "description": "Extra practice and learning materials.",
+    "url": "https://www.khanacademy.org/"
+  }
+]
