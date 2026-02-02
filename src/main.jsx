@@ -18,7 +18,7 @@ function App() {
   ];
 
   const gallery = [
-    { src: "/school/gallery1.jpg", alt: "School photo 1" },
+    { src: "public/school/gallery1.jpg", alt: "School photo 1" },
     { src: "public/school/gallery2.jpg", alt: "School photo 2" },
     { src: "public/school/gallery3.jpg", alt: "School photo 3" },
     { src: "public/school/gallery4.jpg", alt: "School photo 4" },
