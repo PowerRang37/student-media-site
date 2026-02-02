@@ -3,6 +3,8 @@ import ReactDOM from "react-dom/client";
 import "./index.css";
 
 function App() {
+  const BASE = import.meta.env.BASE_URL; // важно для GitHub Pages
+
   const featuredVideo = {
     title: "Almaty Impact Challenge",
     subtitle: "Tap to watch",
@@ -18,12 +20,12 @@ function App() {
   ];
 
   const gallery = [
-    { src: "public/school/gallery1.jpg", alt: "School photo 1" },
-    { src: "public/school/gallery2.jpg", alt: "School photo 2" },
-    { src: "public/school/gallery3.jpg", alt: "School photo 3" },
-    { src: "public/school/gallery4.jpg", alt: "School photo 4" },
-    { src: "public/school/gallery5.jpg", alt: "School photo 5" },
-    { src: "public/school/gallery6.jpg", alt: "School photo 6" },
+    { src: `${BASE}school/gallery1.jpg`, alt: "School photo 1" },
+    { src: `${BASE}school/gallery2.jpg`, alt: "School photo 2" },
+    { src: `${BASE}school/gallery3.jpg`, alt: "School photo 3" },
+    { src: `${BASE}school/gallery4.jpg`, alt: "School photo 4" },
+    { src: `${BASE}school/gallery5.jpg`, alt: "School photo 5" },
+    { src: `${BASE}school/gallery6.jpg`, alt: "School photo 6" },
   ];
 
   return (
@@ -48,7 +50,7 @@ function App() {
         </div>
 
         <div className="hero">
-          <img src="public/school/hero.jpg" alt="School hero" />
+          <img src={`${BASE}school/hero.jpg`} alt="School hero" />
           <div className="heroText">
             <h2 className="heroTitle">Almaty International School</h2>
             <p className="heroSub">Quick access to school resources, announcements, and helpful links.</p>
@@ -139,4 +141,8 @@ function App() {
   );
 }
 
-ReactDOM.createRoot(document.getElementById("root")).render(<App />);
+ReactDOM.createRoot(document.getElementById("root")).render(
+  <React.StrictMode>
+    <App />
+  </React.StrictMode>
+);
