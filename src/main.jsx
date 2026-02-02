@@ -3,7 +3,6 @@ import ReactDOM from "react-dom/client";
 import "./index.css";
 
 function App() {
-  // SharePoint Stream/OneDrive embed link (responsive via CSS)
   const featuredVideo = {
     title: "Almaty Impact Challenge",
     subtitle: "Tap to watch",
@@ -12,35 +11,19 @@ function App() {
   };
 
   const links = [
-    {
-      title: "Library Resources",
-      desc: "Reading materials and library info.",
-      url: "https://example.com",
-    },
-    {
-      title: "Math Practice",
-      desc: "Extra practice and learning materials.",
-      url: "https://example.com",
-    },
-    {
-      title: "Student Handbook",
-      desc: "Key rules, schedules, and expectations.",
-      url: "https://example.com",
-    },
-    {
-      title: "Counselor Office",
-      desc: "Support, forms, and helpful contacts.",
-      url: "https://example.com",
-    },
+    { title: "Library Resources", desc: "Reading materials and library info.", url: "https://example.com" },
+    { title: "Math Practice", desc: "Extra practice and learning materials.", url: "https://example.com" },
+    { title: "Student Handbook", desc: "Key rules, schedules, and expectations.", url: "https://example.com" },
+    { title: "Counselor Office", desc: "Support, forms, and helpful contacts.", url: "https://example.com" },
   ];
 
   const gallery = [
-    { src: "/school/gallery1.jpg", alt: "School photo 1" },
-    { src: "/school/gallery2.jpg", alt: "School photo 2" },
-    { src: "/school/gallery3.jpg", alt: "School photo 3" },
-    { src: "/school/gallery4.jpg", alt: "School photo 4" },
-    { src: "/school/gallery5.jpg", alt: "School photo 5" },
-    { src: "/school/gallery6.jpg", alt: "School photo 6" },
+    { src: "public/school/gallery1.jpg", alt: "School photo 1" },
+    { src: "public/school/gallery2.jpg", alt: "School photo 2" },
+    { src: "public/school/gallery3.jpg", alt: "School photo 3" },
+    { src: "public/school/gallery4.jpg", alt: "School photo 4" },
+    { src: "public/school/gallery5.jpg", alt: "School photo 5" },
+    { src: "public/school/gallery6.jpg", alt: "School photo 6" },
   ];
 
   return (
@@ -65,12 +48,10 @@ function App() {
         </div>
 
         <div className="hero">
-          <img src="/school/hero.jpg" alt="School hero" />
+          <img src="public/school/hero.jpg" alt="School hero" />
           <div className="heroText">
             <h2 className="heroTitle">Almaty International School</h2>
-            <p className="heroSub">
-              Quick access to school resources, announcements, and helpful links.
-            </p>
+            <p className="heroSub">Quick access to school resources, announcements, and helpful links.</p>
           </div>
         </div>
 
@@ -96,13 +77,7 @@ function App() {
           <h2>Useful Links</h2>
           <div className="grid2">
             {links.map((x) => (
-              <a
-                key={x.title}
-                href={x.url}
-                target="_blank"
-                rel="noreferrer"
-                className="arcadeCard"
-              >
+              <a key={x.title} href={x.url} target="_blank" rel="noreferrer" className="arcadeCard">
                 <div className="arcadeTop">
                   <div>
                     <h3 className="arcadeTitle">{x.title}</h3>
@@ -128,24 +103,19 @@ function App() {
                   borderRadius: 14,
                   display: "grid",
                   placeItems: "center",
-                  background:
-                    "linear-gradient(180deg, rgba(67,214,255,.22), rgba(107,102,255,.12))",
+                  background: "linear-gradient(180deg, rgba(67,214,255,.22), rgba(107,102,255,.12))",
                   border: "1px solid rgba(255,255,255,.16)",
-                  boxShadow:
-                    "0 12px 30px rgba(0,0,0,.25), inset 0 1px 0 rgba(255,255,255,.18)",
+                  boxShadow: "0 12px 30px rgba(0,0,0,.25), inset 0 1px 0 rgba(255,255,255,.18)",
                   flex: "0 0 auto",
                 }}
               >
                 💙
               </div>
               <div>
-                <div style={{ fontWeight: 900, marginBottom: 6 }}>
-                  Thank you for supporting our school
-                </div>
+                <div style={{ fontWeight: 900, marginBottom: 6 }}>Thank you for supporting our school</div>
                 <div className="smallNote">
-                  If you would like to make a donation, please visit the school
-                  reception and leave your donation there. Thank you for supporting our
-                  school!
+                  If you would like to make a donation, please visit the school reception and leave your donation there.
+                  Thank you for supporting our school!
                 </div>
               </div>
             </div>
@@ -169,8 +139,4 @@ function App() {
   );
 }
 
-ReactDOM.createRoot(document.getElementById("root")).render(
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>
-);
+ReactDOM.createRoot(document.getElementById("root")).render(<App />);
