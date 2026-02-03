@@ -16,19 +16,22 @@ function App() {
     { title: "Student Handbook", desc: "Key rules, schedules, and expectations.", url: "https://example.com" },
     { title: "Counselor Office", desc: "Support, forms, and helpful contacts.", url: "https://example.com" },
   ];
+  const base = import.meta.env.BASE_URL;
 
   const gallery = [
-    { src: "public/school/gallery1.jpg", alt: "School photo 1" },
-    { src: "public/school/gallery2.jpg", alt: "School photo 2" },
-    { src: "public/school/gallery3.jpg", alt: "School photo 3" },
-    { src: "public/school/gallery4.jpg", alt: "School photo 4" },
-    { src: "public/school/gallery5.jpg", alt: "School photo 5" },
-    { src: "public/school/gallery6.jpg", alt: "School photo 6" },
+    { src: `${base}school/gallery1.jpg`, alt: "School photo 1" },
+    { src: `${base}school/gallery2.jpg`, alt: "School photo 2" },
+    { src: `${base}school/gallery3.jpg`, alt: "School photo 3" },
+    { src: `${base}school/gallery4.jpg`, alt: "School photo 4" },
+    { src: `${base}school/gallery5.jpg`, alt: "School photo 5" },
+    { src: `${base}school/gallery6.jpg`, alt: "School photo 6" },
   ];
 
   return (
     <div className="page">
-      <div className="bg-photo" />
+      <div className="bg-photo"
+      style={{ backgroundImage: `url(${base}school/bg.jpg)` }}
+      />
       <div className="bg-gradient" />
       <div className="bg-noise" />
 
@@ -48,7 +51,7 @@ function App() {
         </div>
 
         <div className="hero">
-          <img src="public/school/hero.jpg" alt="School hero" />
+          <img src={`${base}school/hero.jpg`} alt="School hero" />
           <div className="heroText">
             <h2 className="heroTitle">Almaty International School</h2>
             <p className="heroSub">Quick access to school resources, announcements, and helpful links.</p>

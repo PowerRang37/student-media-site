@@ -56,12 +56,12 @@ a{ color: inherit; text-decoration: none; }
 .bg-photo{
   position: fixed;
   inset: 0;
-  background-image: url("/school/bg.jpg");
   background-size: cover;
   background-position: center;
 
   /* was .25, now higher so photo shows more */
-  opacity: .38;
+  opacity: .55;               /* было .38 */
+  filter: saturate(1.08) contrast(1.03) brightness(1.18); /* было 1.08 */
 
   /* brighten + make it look cleaner */
   filter: saturate(1.06) contrast(1.02) brightness(1.08);
@@ -78,7 +78,7 @@ a{ color: inherit; text-decoration: none; }
     radial-gradient(900px 560px at 80% 20%, rgba(107,102,255,.20) 0%, rgba(43,124,255,.12) 44%, rgba(2,6,23,.70) 80%),
 
     /* key part: reduce “black curtain” */
-    linear-gradient(180deg, rgba(2,6,23,.18), rgba(2,6,23,.62));
+    linear-gradient(180deg, rgba(2,6,23,.10), rgba(2,6,23,.42));
 
   z-index: -2;
 }
