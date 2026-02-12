@@ -14,11 +14,8 @@ function App() {
     { src: `${base}school/gallery6.jpg`, alt: "School photo 6" },
   ];
 
-  // Новая ссылка на видео (прямая для просмотра)
-  const videoUrl = "https://qsinet-my.sharepoint.com/personal/aliaskar-tuzubekov_almaty_qsi_org/_layouts/15/stream.aspx?id=%2Fpersonal%2Faliaskar%2Dtuzubekov%5Falmaty%5Fqsi%5Forg%2FDocuments%2FAlmaty%20Impact%20Challenge%2Emp4&ga=1&referrer=StreamWebApp%2EWeb&referrerScenario=AddressBarCopied%2Eview%2E287dce93%2Ddf3e%2D4ec7%2D9b05%2D254debe366ba";
-
-  // Попытка embed (может потребовать логина — протестируй в инкогнито)
-  const embedUrl = "https://qsinet-my.sharepoint.com/personal/aliaskar-tuzubekov_almaty_qsi_org/_layouts/15/embed.aspx?id=%2Fpersonal%2Faliaskar%2Dtuzubekov%5Falmaty%5Fqsi%5Forg%2FDocuments%2FAlmaty%20Impact%20Challenge%2Emp4&referrer=StreamWebApp&referrerScenario=EmbedDialog.Create";
+  // Прямая ссылка на видео (должна работать без логина, если "Anyone with the link")
+  const videoWatchUrl = "https://qsinet-my.sharepoint.com/:v:/g/personal/aliaskar-tuzubekov_almaty_qsi_org/IQC1OkdpfgWPR7m9ocottpKYAelRFYIVH6UOpPXFvMbv6cY?e=aLENJQ";
 
   return (
     <div className="page">
@@ -44,23 +41,63 @@ function App() {
           </div>
         </div>
 
-        {/* Видео сразу после заголовка */}
+        {/* Секция с видео (теперь как кнопка-ссылка) */}
         <div className="section">
           <h2>Watch the Introduction</h2>
           <div className="videoWrap">
-            <iframe
-              className="videoFrame"
-              src={embedUrl}  // ← если не работает, замени на videoUrl (но тогда iframe не подойдёт — используй <a href={videoUrl} target="_blank">Watch Video</a>)
-              title="Almaty Impact Challenge"
-              allow="autoplay; fullscreen; picture-in-picture"
-              allowFullScreen
-            />
+            <a
+              href={videoWatchUrl}
+              target="_blank"
+              rel="noreferrer"
+              style={{
+                display: "inline-flex",
+                alignItems: "center",
+                justifyContent: "center",
+                width: "100%",
+                padding: "24px 0",
+                fontSize: "20px",
+                fontWeight: 800,
+                color: "var(--text)",
+                background: "linear-gradient(180deg, rgba(67,214,255,.28), rgba(43,124,255,.18))",
+                border: "2px solid rgba(191,239,255,.28)",
+                borderRadius: "16px",
+                textDecoration: "none",
+                boxShadow: "0 12px 32px rgba(0,0,0,.35)",
+                transition: "all .2s ease",
+              }}
+              onMouseOver={(e) => {
+                e.currentTarget.style.transform = "translateY(-3px)";
+                e.currentTarget.style.boxShadow = "0 18px 48px rgba(0,0,0,.45)";
+              }}
+              onMouseOut={(e) => {
+                e.currentTarget.style.transform = "translateY(0)";
+                e.currentTarget.style.boxShadow = "0 12px 32px rgba(0,0,0,.35)";
+              }}
+            >
+              ▶ Watch the Almaty Impact Challenge Video
+            </a>
           </div>
-          <div style={{ marginTop: 12 }} className="smallNote">
-            <strong>Almaty Impact Challenge</strong> — click to play (may require school account in some browsers; try incognito or direct link below if blocked)
-            <br />
-            <a href={videoUrl} target="_blank" rel="noreferrer" style={{ color: "var(--neon-cyan)", fontWeight: 600 }}>
-              Open video in new tab →
+          <div style={{ marginTop: 16 }} className="smallNote">
+            <strong>Click above to open the video</strong> (should play without login if shared as "Anyone with the link").<br />
+            If it asks for sign-in, try in another browser or ask school IT to confirm permissions.
+          </div>
+
+          {/* Ссылка на RBF после видео */}
+          <div style={{ marginTop: 24, textAlign: "center" }}>
+            <p style={{ fontSize: "16px", marginBottom: 12, color: "var(--muted)" }}>
+              Learn more about the Rabia Basri Foundation
+            </p>
+            <a
+              href="https://www.rbf.education/"
+              target="_blank"
+              rel="noreferrer"
+              className="arcadeBtn"
+              style={{
+                fontSize: "17px",
+                padding: "14px 28px",
+              }}
+            >
+              Visit rbf.education <span className="arrow">→</span>
             </a>
           </div>
         </div>
@@ -84,7 +121,7 @@ function App() {
           </div>
         </div>
 
-        {/* Donations блок */}
+        {/* Donations & Questions */}
         <div className="section">
           <h2>Donations & Questions</h2>
           <div className="card">
@@ -116,7 +153,7 @@ function App() {
           </div>
         </div>
 
-        {/* Галерея (оставил, если нужно — удали секцию целиком, если не актуально) */}
+        {/* Галерея — если не нужна, удали эту секцию */}
         <div className="section">
           <h2>School Gallery</h2>
           <div className="galleryGrid">
