@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import ReactDOM from "react-dom/client";
 import "./index.css";
 
@@ -14,8 +14,14 @@ function App() {
     { src: `${base}school/gallery6.jpg`, alt: "School photo 6" },
   ];
 
-  // Embed URL для iframe (из твоего примера; но учти, что он может требовать логин в инкогнито-режиме)
-  const embedUrl = "https://qsinet-my.sharepoint.com/personal/aliaskar-tuzubekov_almaty_qsi_org/_layouts/15/embed.aspx?UniqueId=69473ab5-057e-478f-b9bd-a1ca2db69298&embed=%7B%22ust%22%3Atrue%2C%22hv%22%3A%22CopyEmbedCode%22%7D&referrer=StreamWebApp&referrerScenario=EmbedDialog.Create";
+  // Для lightbox
+  const [selectedImage, setSelectedImage] = useState(null);
+
+  const openLightbox = (src) => setSelectedImage(src);
+  const closeLightbox = () => setSelectedImage(null);
+
+  // YouTube embed
+  const youtubeEmbed = "https://www.youtube.com/embed/Wcboh-5oa1k";
 
   return (
     <div className="page">
@@ -41,23 +47,23 @@ function App() {
           </div>
         </div>
 
-        {/* Видео в iframe (как просил; если не грузится, протестируй в инкогнито и рассмотри YouTube) */}
+        {/* Видео — YouTube iframe */}
         <div className="section">
           <h2>Watch the Introduction</h2>
           <div className="videoWrap">
             <iframe
               className="videoFrame"
-              src={embedUrl}
+              src={youtubeEmbed}
               title="Almaty Impact Challenge"
-              allow="autoplay; fullscreen; picture-in-picture"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
               allowFullScreen
             />
           </div>
           <div style={{ marginTop: 10 }} className="smallNote">
-            <strong>Almaty Impact Challenge</strong> — tap to watch (may require school account if not fully public).
+            <strong>Almaty Impact Challenge</strong> — tap to watch
           </div>
 
-          {/* Ссылка на RBF после видео */}
+          {/* Ссылка на RBF */}
           <div style={{ marginTop: 24, textAlign: "center" }}>
             <p style={{ fontSize: "16px", marginBottom: 12, color: "var(--muted)" }}>
               Learn more about the Rabia Basri Foundation
@@ -77,7 +83,7 @@ function App() {
           </div>
         </div>
 
-        {/* Основной текст описания */}
+        {/* Основной текст */}
         <div className="section">
           <div className="card" style={{ padding: "20px 24px", fontSize: "15px", lineHeight: 1.48 }}>
             <p>
@@ -128,17 +134,79 @@ function App() {
           </div>
         </div>
 
-        {/* Галерея — если не нужна, удали эту секцию */}
+        {/* Галерея с кликабельными фото → lightbox */}
         <div className="section">
           <h2>School Gallery</h2>
           <div className="galleryGrid">
-            {gallery.map((g) => (
-              <div key={g.src} className="photo">
+            {gallery.map((g, index) => (
+              <div
+                key={g.src}
+                className="photo"
+                onClick={() => openLightbox(g.src)}
+                style={{ cursor: "pointer" }}
+              >
                 <img src={g.src} alt={g.alt} loading="lazy" />
               </div>
             ))}
           </div>
         </div>
+
+        {/* Lightbox (модалка) */}
+        {selectedImage && (
+          <div
+            style={{
+              position: "fixed",
+              inset: 0,
+              background: "rgba(0,0,0,0.92)",
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              zIndex: 9999,
+              padding: "20px",
+              backdropFilter: "blur(8px)",
+            }}
+            onClick={closeLightbox}
+          >
+            <div
+              style={{
+                position: "relative",
+                maxWidth: "95%",
+                maxHeight: "95vh",
+              }}
+              onClick={(e) => e.stopPropagation()} // не закрывать при клике на фото
+            >
+              <img
+                src={selectedImage}
+                alt="Enlarged"
+                style={{
+                  maxWidth: "100%",
+                  maxHeight: "90vh",
+                  borderRadius: "12px",
+                  boxShadow: "0 20px 60px rgba(0,0,0,0.6)",
+                  objectFit: "contain",
+                }}
+              />
+              <button
+                onClick={closeLightbox}
+                style={{
+                  position: "absolute",
+                  top: "-40px",
+                  right: "0",
+                  background: "rgba(0,0,0,0.6)",
+                  color: "white",
+                  border: "none",
+                  borderRadius: "50%",
+                  width: "40px",
+                  height: "40px",
+                  fontSize: "24px",
+                  cursor: "pointer",
+                }}
+              >
+                ×
+              </button>
+            </div>
+          </div>
+        )}
 
         <div className="footer">
           Almaty International School • Almaty Impact Challenge • built with ❤️
