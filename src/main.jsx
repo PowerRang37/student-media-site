@@ -14,8 +14,8 @@ function App() {
     { src: `${base}school/gallery6.jpg`, alt: "School photo 6" },
   ];
 
-  // Прямая ссылка на видео (должна работать без логина, если "Anyone with the link")
-  const videoWatchUrl = "https://qsinet-my.sharepoint.com/:v:/g/personal/aliaskar-tuzubekov_almaty_qsi_org/IQC1OkdpfgWPR7m9ocottpKYAelRFYIVH6UOpPXFvMbv6cY?e=aLENJQ";
+  // Embed URL для iframe (из твоего примера; но учти, что он может требовать логин в инкогнито-режиме)
+  const embedUrl = "https://qsinet-my.sharepoint.com/personal/aliaskar-tuzubekov_almaty_qsi_org/_layouts/15/embed.aspx?UniqueId=69473ab5-057e-478f-b9bd-a1ca2db69298&embed=%7B%22ust%22%3Atrue%2C%22hv%22%3A%22CopyEmbedCode%22%7D&referrer=StreamWebApp&referrerScenario=EmbedDialog.Create";
 
   return (
     <div className="page">
@@ -41,45 +41,20 @@ function App() {
           </div>
         </div>
 
-        {/* Секция с видео (теперь как кнопка-ссылка) */}
+        {/* Видео в iframe (как просил; если не грузится, протестируй в инкогнито и рассмотри YouTube) */}
         <div className="section">
           <h2>Watch the Introduction</h2>
           <div className="videoWrap">
-            <a
-              href={videoWatchUrl}
-              target="_blank"
-              rel="noreferrer"
-              style={{
-                display: "inline-flex",
-                alignItems: "center",
-                justifyContent: "center",
-                width: "100%",
-                padding: "24px 0",
-                fontSize: "20px",
-                fontWeight: 800,
-                color: "var(--text)",
-                background: "linear-gradient(180deg, rgba(67,214,255,.28), rgba(43,124,255,.18))",
-                border: "2px solid rgba(191,239,255,.28)",
-                borderRadius: "16px",
-                textDecoration: "none",
-                boxShadow: "0 12px 32px rgba(0,0,0,.35)",
-                transition: "all .2s ease",
-              }}
-              onMouseOver={(e) => {
-                e.currentTarget.style.transform = "translateY(-3px)";
-                e.currentTarget.style.boxShadow = "0 18px 48px rgba(0,0,0,.45)";
-              }}
-              onMouseOut={(e) => {
-                e.currentTarget.style.transform = "translateY(0)";
-                e.currentTarget.style.boxShadow = "0 12px 32px rgba(0,0,0,.35)";
-              }}
-            >
-              ▶ Watch the Almaty Impact Challenge Video
-            </a>
+            <iframe
+              className="videoFrame"
+              src={embedUrl}
+              title="Almaty Impact Challenge"
+              allow="autoplay; fullscreen; picture-in-picture"
+              allowFullScreen
+            />
           </div>
-          <div style={{ marginTop: 16 }} className="smallNote">
-            <strong>Click above to open the video</strong> (should play without login if shared as "Anyone with the link").<br />
-            If it asks for sign-in, try in another browser or ask school IT to confirm permissions.
+          <div style={{ marginTop: 10 }} className="smallNote">
+            <strong>Almaty Impact Challenge</strong> — tap to watch (may require school account if not fully public).
           </div>
 
           {/* Ссылка на RBF после видео */}
