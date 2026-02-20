@@ -1,6 +1,67 @@
-import React, { useState } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import ReactDOM from "react-dom/client";
 import "./index.css";
+
+/* ── Fundraising Progress Bar ── */
+function FundraisingBar({ raised, goal }) {
+  const pct = Math.min(100, Math.round((raised / goal) * 100));
+  const barRef = useRef(null);
+  const [animated, setAnimated] = useState(false);
+
+  useEffect(() => {
+    const el = barRef.current;
+    if (!el) return;
+    const obs = new IntersectionObserver(
+      ([entry]) => { if (entry.isIntersecting) { setAnimated(true); obs.disconnect(); } },
+      { threshold: 0.3 }
+    );
+    obs.observe(el);
+    return () => obs.disconnect();
+  }, []);
+
+  const fmt = (n) => n.toLocaleString("en-US");
+
+  return (
+    <div className="fundraiseWrap" ref={barRef}>
+      {/* Header row */}
+      <div className="fundraiseHeader">
+        <div className="fundraiseLabel">Community Fundraising Goal</div>
+        <div className="fundraisePct">{pct}%</div>
+      </div>
+
+      {/* Amount row */}
+      <div className="fundraiseAmounts">
+        <span className="fundraiseRaised">
+          <span className="fundraiseCurrency">KZT</span>
+          {fmt(raised)}
+        </span>
+        <span className="fundraiseGoalText">of {fmt(goal)} goal</span>
+      </div>
+
+      {/* Bar */}
+      <div className="fundraiseTrack">
+        <div
+          className="fundraiseFill"
+          style={{ width: animated ? `${pct}%` : "0%" }}
+        >
+          <div className="fundraiseGlow" />
+          <div className="fundraisePulse" />
+        </div>
+        {/* Milestone marker at 50% */}
+        <div className="fundraiseMilestone" style={{ left: "50%" }}>
+          <div className="fundraiseMilestoneLine" />
+          <div className="fundraiseMilestoneLabel">50%</div>
+        </div>
+      </div>
+
+      {/* Footer message */}
+      <div className="fundraiseFooter">
+        <span className="fundraiseHeart">💙</span>
+        Every donation brings us closer to supporting inclusive education for all.
+      </div>
+    </div>
+  );
+}
 
 function App() {
   const base = import.meta.env.BASE_URL;
@@ -100,6 +161,12 @@ function App() {
               “Diversity is having a seat at the table, inclusion is having a voice, and belonging is having that voice be heard.”
             </blockquote>
           </div>
+        </div>
+
+        {/* Fundraising Progress */}
+        <div className="section">
+          <h2>Fundraising Progress</h2>
+          <FundraisingBar raised={445000} goal={750000} />
         </div>
 
         {/* Donations & Questions */}
