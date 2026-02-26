@@ -201,6 +201,38 @@ function App() {
           </div>
         </div>
 
+        {/* Student Outreach Activity Log */}
+        <div className="section">
+          <h2>Student Outreach</h2>
+          <div className="outreachList">
+            {[
+              {
+                src: `${base}school/Students1.png`,
+                caption: "Our Secondary Student Council members have been going into classrooms to read to our younger students about inclusivity and diversity.",
+                date: "February 2026",
+              },
+              // Добавляй сюда новые записи:
+              // { src: `${base}school/Students2.jpg`, caption: "...", date: "..." },
+            ].map((item, i) => (
+              <div key={i} className="outreachCard" onClick={() => openLightbox(item.src)} style={{ cursor: "pointer" }}>
+                <div className="outreachImgWrap">
+                  <img src={item.src} alt={item.caption} loading="lazy" />
+                  <div className="outreachOverlay">
+                    <span className="outreachZoom">🔍</span>
+                  </div>
+                </div>
+                <div className="outreachBody">
+                  <div className="outreachMeta">
+                    <span className="outreachTag">📚 Student Action</span>
+                    <span className="outreachDate">{item.date}</span>
+                  </div>
+                  <p className="outreachCaption">{item.caption}</p>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+
         {/* Галерея с кликабельными фото → lightbox */}
         <div className="section">
           <h2>School Gallery</h2>
