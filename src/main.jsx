@@ -23,13 +23,10 @@ function FundraisingBar({ raised, goal }) {
 
   return (
     <div className="fundraiseWrap" ref={barRef}>
-      {/* Header row */}
       <div className="fundraiseHeader">
         <div className="fundraiseLabel">Community Fundraising Goal</div>
         <div className="fundraisePct">{pct}%</div>
       </div>
-
-      {/* Amount row */}
       <div className="fundraiseAmounts">
         <span className="fundraiseRaised">
           <span className="fundraiseCurrency">KZT</span>
@@ -37,8 +34,6 @@ function FundraisingBar({ raised, goal }) {
         </span>
         <span className="fundraiseGoalText">of {fmt(goal)} goal</span>
       </div>
-
-      {/* Bar */}
       <div className="fundraiseTrack">
         <div
           className="fundraiseFill"
@@ -47,14 +42,11 @@ function FundraisingBar({ raised, goal }) {
           <div className="fundraiseGlow" />
           <div className="fundraisePulse" />
         </div>
-        {/* Milestone marker at 50% */}
         <div className="fundraiseMilestone" style={{ left: "50%" }}>
           <div className="fundraiseMilestoneLine" />
           <div className="fundraiseMilestoneLabel">50%</div>
         </div>
       </div>
-
-      {/* Footer message */}
       <div className="fundraiseFooter">
         <span className="fundraiseHeart">💙</span>
         Every donation brings us closer to supporting inclusive education for all.
@@ -63,6 +55,85 @@ function FundraisingBar({ raised, goal }) {
   );
 }
 
+/* ── Student Outreach Slider ── */
+function OutreachSlider({ base, openLightbox }) {
+  const slides = [
+    {
+      src: `${base}school/Students1.png`,
+      caption: "Our Secondary Student Council members have been going into classrooms to read to our younger students about inclusivity and diversity.",
+      date: "February 2026",
+    },
+    {
+      src: `${base}school/Students2.JPG`,
+      caption: "Our Secondary Student Council members have been going into classrooms to read to our younger students about inclusivity and diversity.",
+      date: "February 2026",
+    },
+    // Добавляй новые фотки сюда:
+    // { src: `${base}school/Students3.jpg`, caption: "...", date: "February 2026" },
+  ];
+
+  const [idx, setIdx] = useState(0);
+  const prev = () => setIdx((i) => (i === 0 ? slides.length - 1 : i - 1));
+  const next = () => setIdx((i) => (i === slides.length - 1 ? 0 : i + 1));
+  const slide = slides[idx];
+
+  return (
+    <div className="outreachCard">
+      <div
+        className="outreachImgWrap"
+        onClick={() => openLightbox(slide.src, slides.map(s => s.src))}
+        style={{ cursor: "pointer" }}
+      >
+        <img src={slide.src} alt={slide.caption} loading="lazy" />
+        <div className="outreachOverlay">
+          <span className="outreachZoom">🔍</span>
+        </div>
+      </div>
+      <div className="outreachBody">
+        <div className="outreachMeta">
+          <span className="outreachTag">📚 Student Action</span>
+          <span className="outreachDate">{slide.date}</span>
+        </div>
+        <p className="outreachCaption">{slide.caption}</p>
+        <div style={{ display: "flex", alignItems: "center", gap: 14, marginTop: 16 }}>
+          <button
+            onClick={prev}
+            style={{
+              background: "rgba(0,250,255,.15)",
+              border: "1px solid rgba(0,250,255,.3)",
+              color: "white",
+              borderRadius: 10,
+              padding: "8px 18px",
+              cursor: "pointer",
+              fontSize: 20,
+              fontWeight: 700,
+              lineHeight: 1,
+            }}
+          >‹</button>
+          <span style={{ color: "rgba(240,250,255,.55)", fontSize: 13 }}>
+            {idx + 1} / {slides.length}
+          </span>
+          <button
+            onClick={next}
+            style={{
+              background: "rgba(0,250,255,.15)",
+              border: "1px solid rgba(0,250,255,.3)",
+              color: "white",
+              borderRadius: 10,
+              padding: "8px 18px",
+              cursor: "pointer",
+              fontSize: 20,
+              fontWeight: 700,
+              lineHeight: 1,
+            }}
+          >›</button>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+/* ── Main App ── */
 function App() {
   const base = import.meta.env.BASE_URL;
 
@@ -75,13 +146,16 @@ function App() {
     { src: `${base}school/gallery6.jpg`, alt: "School photo 6" },
   ];
 
-  // Для lightbox
-  const [selectedImage, setSelectedImage] = useState(null);
+  const [lightbox, setLightbox] = useState(null); // { srcs: [...], idx: 0 }
+  const openLightbox = (src, srcs) => {
+    const list = srcs || [src];
+    setLightbox({ srcs: list, idx: list.indexOf(src) });
+  };
+  const closeLightbox = () => setLightbox(null);
+  const lightboxPrev = () => setLightbox((l) => ({ ...l, idx: l.idx === 0 ? l.srcs.length - 1 : l.idx - 1 }));
+  const lightboxNext = () => setLightbox((l) => ({ ...l, idx: l.idx === l.srcs.length - 1 ? 0 : l.idx + 1 }));
+  const selectedImage = lightbox ? lightbox.srcs[lightbox.idx] : null;
 
-  const openLightbox = (src) => setSelectedImage(src);
-  const closeLightbox = () => setSelectedImage(null);
-
-  // YouTube embed
   const youtubeEmbed = "https://www.youtube.com/embed/Wcboh-5oa1k";
 
   return (
@@ -123,8 +197,6 @@ function App() {
           <div style={{ marginTop: 10 }} className="smallNote">
             <strong>Almaty Impact Challenge</strong> — tap to watch
           </div>
-
-          {/* Ссылка на RBF */}
           <div style={{ marginTop: 24, textAlign: "center" }}>
             <p style={{ fontSize: "16px", marginBottom: 12, color: "var(--muted)" }}>
               Learn more about the Rabia Basri Foundation
@@ -134,10 +206,7 @@ function App() {
               target="_blank"
               rel="noreferrer"
               className="arcadeBtn"
-              style={{
-                fontSize: "17px",
-                padding: "14px 28px",
-              }}
+              style={{ fontSize: "17px", padding: "14px 28px" }}
             >
               Visit rbf.education <span className="arrow">→</span>
             </a>
@@ -156,9 +225,8 @@ function App() {
             <p>
               After spending the month of January organizing our advocacy efforts, we have now entered the month of giving (February). We hope that you will read the attached flyer to learn more about the different ways our school is coming together to support inclusive education for people with disabilities and look for ways that you can also get involved.
             </p>
-
             <blockquote style={{ margin: "24px 0", paddingLeft: "20px", borderLeft: "4px solid var(--neon-cyan)", fontStyle: "italic", color: "var(--muted)" }}>
-              “Diversity is having a seat at the table, inclusion is having a voice, and belonging is having that voice be heard.”
+              "Diversity is having a seat at the table, inclusion is having a voice, and belonging is having that voice be heard."
             </blockquote>
           </div>
         </div>
@@ -166,7 +234,7 @@ function App() {
         {/* Fundraising Progress */}
         <div className="section">
           <h2>Fundraising Progress</h2>
-          <FundraisingBar raised={517000} goal={750000} />
+          <FundraisingBar raised={533500} goal={750000} />
         </div>
 
         {/* Donations & Questions */}
@@ -181,7 +249,6 @@ function App() {
                 Donations are being accepted throughout the month of February.<br />
                 Please bring cash donations to Mrs. Fleming's classroom <strong>#104</strong>.
               </p>
-
               <div style={{ marginTop: 12 }}>
                 <div style={{ fontWeight: 700, marginBottom: 8 }}>Questions?</div>
                 <p style={{ margin: "8px 0", fontSize: "15px" }}>
@@ -201,43 +268,17 @@ function App() {
           </div>
         </div>
 
-        {/* Student Outreach Activity Log */}
+        {/* Student Outreach Slider */}
         <div className="section">
           <h2>Student Outreach</h2>
-          <div className="outreachList">
-            {[
-              {
-                src: `${base}school/Students1.png`,
-                caption: "Our Secondary Student Council members have been going into classrooms to read to our younger students about inclusivity and diversity.",
-                date: "February 2026",
-              },
-              // Добавляй сюда новые записи:
-              // { src: `${base}school/Students2.jpg`, caption: "...", date: "..." },
-            ].map((item, i) => (
-              <div key={i} className="outreachCard" onClick={() => openLightbox(item.src)} style={{ cursor: "pointer" }}>
-                <div className="outreachImgWrap">
-                  <img src={item.src} alt={item.caption} loading="lazy" />
-                  <div className="outreachOverlay">
-                    <span className="outreachZoom">🔍</span>
-                  </div>
-                </div>
-                <div className="outreachBody">
-                  <div className="outreachMeta">
-                    <span className="outreachTag">📚 Student Action</span>
-                    <span className="outreachDate">{item.date}</span>
-                  </div>
-                  <p className="outreachCaption">{item.caption}</p>
-                </div>
-              </div>
-            ))}
-          </div>
+          <OutreachSlider base={base} openLightbox={openLightbox} />
         </div>
 
-        {/* Галерея с кликабельными фото → lightbox */}
+        {/* Галерея */}
         <div className="section">
           <h2>School Gallery</h2>
           <div className="galleryGrid">
-            {gallery.map((g, index) => (
+            {gallery.map((g) => (
               <div
                 key={g.src}
                 className="photo"
@@ -250,7 +291,7 @@ function App() {
           </div>
         </div>
 
-        {/* Lightbox (модалка) */}
+        {/* Lightbox */}
         {selectedImage && (
           <div
             style={{
@@ -266,13 +307,36 @@ function App() {
             }}
             onClick={closeLightbox}
           >
+            {/* Стрелка влево */}
+            {lightbox.srcs.length > 1 && (
+              <button
+                onClick={(e) => { e.stopPropagation(); lightboxPrev(); }}
+                style={{
+                  position: "fixed",
+                  left: 16,
+                  top: "50%",
+                  transform: "translateY(-50%)",
+                  background: "rgba(255,255,255,0.12)",
+                  border: "1px solid rgba(255,255,255,0.25)",
+                  color: "white",
+                  borderRadius: 14,
+                  width: 52,
+                  height: 52,
+                  fontSize: 28,
+                  fontWeight: 700,
+                  cursor: "pointer",
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  backdropFilter: "blur(8px)",
+                  zIndex: 10000,
+                }}
+              >‹</button>
+            )}
+
             <div
-              style={{
-                position: "relative",
-                maxWidth: "95%",
-                maxHeight: "95vh",
-              }}
-              onClick={(e) => e.stopPropagation()} // не закрывать при клике на фото
+              style={{ position: "relative", maxWidth: "95%", maxHeight: "95vh" }}
+              onClick={(e) => e.stopPropagation()}
             >
               <img
                 src={selectedImage}
@@ -285,6 +349,20 @@ function App() {
                   objectFit: "contain",
                 }}
               />
+              {/* Счётчик */}
+              {lightbox.srcs.length > 1 && (
+                <div style={{
+                  position: "absolute",
+                  bottom: -32,
+                  left: "50%",
+                  transform: "translateX(-50%)",
+                  color: "rgba(255,255,255,0.5)",
+                  fontSize: 13,
+                  whiteSpace: "nowrap",
+                }}>
+                  {lightbox.idx + 1} / {lightbox.srcs.length}
+                </div>
+              )}
               <button
                 onClick={closeLightbox}
                 style={{
@@ -300,10 +378,35 @@ function App() {
                   fontSize: "24px",
                   cursor: "pointer",
                 }}
-              >
-                ×
-              </button>
+              >×</button>
             </div>
+
+            {/* Стрелка вправо */}
+            {lightbox.srcs.length > 1 && (
+              <button
+                onClick={(e) => { e.stopPropagation(); lightboxNext(); }}
+                style={{
+                  position: "fixed",
+                  right: 16,
+                  top: "50%",
+                  transform: "translateY(-50%)",
+                  background: "rgba(255,255,255,0.12)",
+                  border: "1px solid rgba(255,255,255,0.25)",
+                  color: "white",
+                  borderRadius: 14,
+                  width: 52,
+                  height: 52,
+                  fontSize: 28,
+                  fontWeight: 700,
+                  cursor: "pointer",
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  backdropFilter: "blur(8px)",
+                  zIndex: 10000,
+                }}
+              >›</button>
+            )}
           </div>
         )}
 
