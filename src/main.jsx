@@ -234,7 +234,7 @@ function App() {
         {/* Fundraising Progress */}
         <div className="section">
           <h2>Fundraising Progress</h2>
-          <FundraisingBar raised={533500} goal={750000} />
+          <FundraisingBar raised={703500} goal={750000} />
         </div>
 
         {/* Donations & Questions */}
